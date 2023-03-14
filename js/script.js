@@ -1,58 +1,41 @@
 // targets all h1, but stops at first one it finds
 var h1 = document.querySelector("h1");
-// targeting button
 var button = document.querySelector("button");
-// targetting body
 var body = document.body;
+// Create variable to track if dark mode is active
+var darkmodeActive = false;
 
-// console.log(h1.innerText);
-// console.log(button.innerText);
-
-// overwriting current text
 h1.innerText = "JS Next Level";
 
-// setting up event lister - any action a user can perform on a page
-// addeventlistener takes 2 arguments
+// Toggle between light mode and dark
+// If variable is true, switch to light else switch to dark
 
 button.addEventListener("click", function () {
-  //   body.style.backgroundColor = "#777";
-  //   body.style.color = "#fff";
-  //   body.style.cssText = "background-color: #777; color:#fff";
-
-  body.setAttribute("class", "darkmode");
-  //   console.log("clicked");
+  if (darkmodeActive === false) {
+    // switch to dark mode
+    body.classList.add("darkmode");
+    button.innerText = "Light Mode";
+    darkmodeActive = true;
+  } else {
+    body.classList.remove("darkmode");
+    button.innerText = "Dark Mode";
+    darkmodeActive = false;
+  }
 });
 
-// function newStuff(num, str, whatAmI) {
-//   whatAmI();
-// }
+var h3 = document.querySelector("h3");
+var count = 10;
 
-// newStuff(10, "some string", function () {
-//   console.log("make this print out");
-// });
+// On page load, initialize event listeners and run
+// any functions that need to process when the page first loads
 
-// function newStuff(num, str, callback) {
-//   callback();
-// }
+var timer = setInterval(function () {
+  count--;
+  h3.innerText = "Count: " + count;
 
-// newStuff(10, "some string", function () {
-//   console.log("make this print out");
-// });
-
-// function newStuff(num, str, callback) {
-//   callback("make me console out ...... tricky trick.");
-// }
-
-// newStuff(10, "some string", function (someVal) {
-//   console.log(someVal);
-// });
-
-// function newStuff(num, str, callback) {
-//   callback("make me console out .....not so tricky now");
-// }
-
-// function someFunc(someVal) {
-//   console.log(someVal);
-// }
-
-// newStuff(10, "some string", someFunc);
+  //   check count and if equal to zero, clear interval
+  if (count === 0) {
+    clearInterval(timer);
+    alert("Times Up!");
+  }
+}, 1000);
