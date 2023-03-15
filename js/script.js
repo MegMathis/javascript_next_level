@@ -1,41 +1,144 @@
-// targets all h1, but stops at first one it finds
 var h1 = document.querySelector("h1");
 var button = document.querySelector("button");
 var body = document.body;
-// Create variable to track if dark mode is active
+var h3 = document.querySelector("h3");
+
+// Create a variable that tracks if dark mode is active
 var darkmodeActive = false;
+var count = 5;
 
-h1.innerText = "JS Next Level";
+function setHeaderText() {
+  h1.innerText = "JS Next Level";
+}
 
-// Toggle between light mode and dark
-// If variable is true, switch to light else switch to dark
+function toggleDarkMode(something) {
+  something.stopPropagation();
 
-button.addEventListener("click", function () {
   if (darkmodeActive === false) {
-    // switch to dark mode
+    // Switch to dark mode
     body.classList.add("darkmode");
     button.innerText = "Light Mode";
     darkmodeActive = true;
   } else {
+    // Switch to light mode
     body.classList.remove("darkmode");
     button.innerText = "Dark Mode";
     darkmodeActive = false;
   }
-});
+}
 
-var h3 = document.querySelector("h3");
-var count = 10;
+function startCountdown() {
+  var timer = setInterval(function () {
+    count--;
+    h3.innerText = "Count: " + count;
 
-// On page load, initialize event listeners and run
+    // check count and if equal to zero, clear interval
+    if (count === 0) {
+      clearInterval(timer);
+    }
+  }, 1000);
+}
+
+// On page load initialize event listeners and run
 // any functions that need to process when the page first loads
+function init() {
+  setHeaderText();
+  startCountdown();
+  button.addEventListener("click", toggleDarkMode);
 
-var timer = setInterval(function () {
-  count--;
-  h3.innerText = "Count: " + count;
+  // var lis = document.querySelectorAll("li");
 
-  //   check count and if equal to zero, clear interval
-  if (count === 0) {
-    clearInterval(timer);
-    alert("Times Up!");
+  // for (var li of lis) {
+  //   li.addEventListener("click", function (eventObj) {
+  //     // eventObj target or "this"
+  //     console.log(this.innerText);
+
+  //     // console.log(eventObj.target.textContent);
+  //     // console.log("li clicked");
+  //   });
+  // }
+  var ul = document.querySelector("ul");
+  // var fruits = ["orange", "apple", "grape", "kiwi", "blueberry"];
+
+  var peopleData = [
+    {
+      name: "Jose",
+      age: 24,
+      correctAnswer: true
+    },
+    {
+      name: "Natalie",
+      age: 22,
+      correctAnswer: false
+    },
+  ];
+
+  // console.log (personData);
+
+  for (var i = 0; i < peopleData.length; i++) {
+    var personObj = peopleData[i];
+
+    var li = document.createElement("li");
+
+    // create an h3 and set its text to personObj.name
+    var h3 = document.createElement("h3");
+    h3.innerText = "Name: " + personObj.name;
+    li.append(h3);
+    // create a p tag and set its text to personObj.age
+    var p = document.createElement("p");
+    p.innerText = "Age: " + personObj.age;
+    li.append(p);
+
+    li.dataset.personIndex = i;
+
+    ul.append(li);
   }
-}, 1000);
+
+  // for (var fruit of fruits) {
+  //   var li = document.createElement("li");
+  //   li.innerText = fruit;
+
+  //   li.dataset.fruitIndex = 0;
+
+  //   ul.append(li);
+  // }
+
+  ul.addEventListener("click", function (eventObj) {
+    // var li = eventObj.target;
+    // console.log(li.dataset);
+  //   var el = eventObj.target;
+  //   if (el.tagName === "LI") {
+  //     var index = el.dataset.personIndex;
+  //     var parsedIndex = parseInt(index);
+  //     var person = peopleData[index];
+  //     alert(person.name);
+  //   }
+  // });
+
+
+  var el = eventObj.target;
+
+  if (el.tagName ==="LI") {
+    console.log ("That is correct");
+  } else {
+    console.log ("That is incorrect");
+  }
+  }
+
+  // var bubbleDiv = document.querySelector('.bubble');
+  // bubbleDiv.addEventListener('click', function () {
+  //   console.log('do I still work?');
+  // });
+
+  // var link = document.querySelector('#link');
+
+  // link.addEventListener('click', function (obj) {
+  //   obj.preventDefault();
+
+  //   // window.location = 'https://github.com';
+  //   console.log('wait! Link clicked');
+  // });
+}
+
+// Initialize our app
+init();
